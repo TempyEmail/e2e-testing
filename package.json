@@ -1,0 +1,52 @@
+{
+  "name": "@tempyemail/e2e-testing",
+  "version": "1.0.0",
+  "description": "JavaScript client for tempy.email - temporary email addresses for automated E2E testing",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "email",
+    "testing",
+    "e2e",
+    "temporary",
+    "disposable",
+    "playwright",
+    "cypress",
+    "jest",
+    "vitest",
+    "otp",
+    "verification",
+    "2fa",
+    "automation"
+  ],
+  "author": "TempyEmail",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TempyEmail/e2e-testing.git"
+  },
+  "bugs": {
+    "url": "https://github.com/TempyEmail/e2e-testing/issues"
+  },
+  "homepage": "https://tempy.email",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

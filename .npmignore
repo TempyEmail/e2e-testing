@@ -1,0 +1,31 @@
+# Source files
+src/
+
+# Examples
+examples/
+
+# Configuration
+tsconfig.json
+.eslintrc*
+.prettierrc*
+
+# Testing
+*.test.ts
+*.spec.ts
+coverage/
+
+# Development
+.git/
+.github/
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Environment
+.env*
+
+# OS
+.DS_Store
+Thumbs.db
