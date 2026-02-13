@@ -11,7 +11,10 @@
   ],
   "scripts": {
     "build": "tsc",
-    "prepublishOnly": "npm run build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "prepublishOnly": "npm run build && npm test",
     "clean": "rm -rf dist"
   },
   "keywords": [
@@ -44,7 +47,9 @@
   },
   "devDependencies": {
     "@types/node": "^20.11.0",
-    "typescript": "^5.3.3"
+    "@vitest/coverage-v8": "4.0.18",
+    "typescript": "^5.3.3",
+    "vitest": "4.0.18"
   },
   "engines": {
     "node": ">=16.0.0"

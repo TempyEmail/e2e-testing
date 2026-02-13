@@ -73,7 +73,7 @@ export function extractVerificationLink(
  */
 export function extractLinksByDomain(text: string, domain: string): string[] {
   const links = extractLinks(text);
-  return links.filter((link) => link.includes(domain));
+  return links.filter((link) => link.toLowerCase().includes(domain.toLowerCase()));
 }
 
 /**

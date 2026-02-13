@@ -30,7 +30,11 @@ export function extractAlphanumericOTP(
   text: string,
   length = 6
 ): string | null {
-  const pattern = new RegExp(`\\b([A-Z0-9]{${length}})\\b`, 'i');
+  // Match alphanumeric codes that contain both letters AND numbers
+  const pattern = new RegExp(
+    `\\b(?=.*[A-Z])(?=.*[0-9])([A-Z0-9]{${length}})\\b`,
+    'i'
+  );
   const match = text.match(pattern);
   return match ? match[1] : null;
 }

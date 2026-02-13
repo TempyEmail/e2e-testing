@@ -15,28 +15,35 @@ export async function pollUntil<T>(
     backoff = true,
   } = options;
 
-  const startTime = Date.now();
   let currentInterval = interval;
 
-  while (true) {
-    const result = await fn();
-    if (result !== null) {
-      return result;
-    }
+  // Create a timeout promise that rejects after the specified timeout
+  const timeoutPromise = new Promise<never>((_, reject) => {
+    setTimeout(() => {
+      reject(new Error(`Polling timeout after ${timeout}ms`));
+    }, timeout);
+  });
 
-    const elapsed = Date.now() - startTime;
-    if (elapsed >= timeout) {
-      throw new Error(`Polling timeout after ${timeout}ms`);
-    }
+  // Create the polling promise
+  const pollingPromise = (async () => {
+    while (true) {
+      const result = await fn();
+      if (result !== null && result !== undefined) {
+        return result;
+      }
 
-    // Wait for the current interval
-    await new Promise((resolve) => setTimeout(resolve, currentInterval));
+      // Wait for the current interval
+      await new Promise((resolve) => setTimeout(resolve, currentInterval));
 
-    // Apply exponential backoff if enabled
-    if (backoff) {
-      currentInterval = Math.min(currentInterval * 1.5, maxInterval);
+      // Apply exponential backoff if enabled
+      if (backoff) {
+        currentInterval = Math.min(currentInterval * 1.5, maxInterval);
+      }
     }
-  }
+  })();
+
+  // Race between polling and timeout
+  return Promise.race([pollingPromise, timeoutPromise]);
 }
 
 /**
