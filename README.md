@@ -80,6 +80,7 @@ Create a new temporary mailbox.
 
 ```typescript
 const mailbox = await client.createMailbox({
+  domain?: string;               // Optional domain (e.g. 'tempy.email', 'jsondb.net')
   webhookUrl?: string;           // Optional webhook URL
   webhookFormat?: 'json' | 'xml'; // Default: 'json'
 });

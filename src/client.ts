@@ -17,19 +17,24 @@ export class TempyEmail {
    * Create a new temporary mailbox
    */
   async createMailbox(options: CreateMailboxOptions = {}): Promise<Mailbox> {
-    const { webhookUrl, webhookFormat } = options;
+    const { domain, webhookUrl, webhookFormat } = options;
 
-    const params = new URLSearchParams();
+    const body: Record<string, string> = {};
+    if (domain) body.domain = domain;
     if (webhookUrl) {
-      params.append('webhookUrl', webhookUrl);
-      params.append('webhookFormat', webhookFormat || 'json');
+      body.webhookUrl = webhookUrl;
+      body.webhookFormat = webhookFormat || 'json';
     }
 
-    const url = `${this.baseUrl}/mailbox${params.toString() ? `?${params.toString()}` : ''}`;
+    const hasBody = Object.keys(body).length > 0;
 
-    const response = await fetch(url, {
+    const response = await fetch(`${this.baseUrl}/mailbox`, {
       method: 'POST',
-      headers: { Accept: 'application/json' },
+      headers: {
+        Accept: 'application/json',
+        ...(hasBody ? { 'Content-Type': 'application/json' } : {}),
+      },
+      ...(hasBody ? { body: JSON.stringify(body) } : {}),
     });
 
     if (!response.ok) {

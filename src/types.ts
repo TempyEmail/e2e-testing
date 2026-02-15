@@ -36,6 +36,7 @@ export interface CreateMailboxResponse {
 }
 
 export interface CreateMailboxOptions {
+  domain?: string;
   webhookUrl?: string;
   webhookFormat?: 'json' | 'xml';
 }
